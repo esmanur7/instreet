@@ -38,15 +38,16 @@ export default {
     return {
       currentIndex: 0,
       carouselItems: [
-        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-12/02/slider-mob-1733123911.jpg" },
-        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider-mob-02-outdoor.jpg" },
-        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider-mob-03-jj.jpg" },
-        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider-mob-04-outdoor.jpg" },
-        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider-mob-05-giyim.jpg" },
-        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider-mob-06-reebok.jpg" },
-        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider-mob-07-puma.jpg" },
-        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider-mob-08-nike.jpg" },
-        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider-mob-09-ck-tommy.jpg" },
+        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider_02-outdoor.jpg" },
+        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider_03-jj.jpg" },
+        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider_04_botfirsatlari.jpg" },
+        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider_05-giyim.jpg" },
+        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider_06-reebok.jpg" },
+        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider_07-puma.jpg" },
+        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider_08-nike.jpg" },
+        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-11/28/slider-09-ck_tommy.jpg" },
+        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-12/02/1000-tl-indirim.jpg" },
+        { image: "https://floimages.mncdn.com/media/catalog/product/img/banners/24-12/02/slider.jpg" },
       ],
     };
   },
@@ -107,17 +108,19 @@ export default {
   border: none;
   font-size: 24px;
   cursor: pointer;
-  padding: 10px;
+  width: 50px; /* Butonun genişliği */
+  height: 50px; 
+  padding: 5px;
   border-radius: 50%;
   z-index: 10;
 }
 
 .carousel-nav.prev {
-  left: 10px;
+  left: 60px;
 }
 
 .carousel-nav.next {
-  right: 10px;
+  right: 60px;
 }
 
 .carousel-dots {
