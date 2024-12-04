@@ -1,81 +1,112 @@
-<script setup>
-import { ref } from 'vue';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-
-
-// Componentleri import et
-import SearchBar from '~/components/SearchBar.vue';
-
-// Hangi componentin gösterileceğini kontrol eden state
-const currentComponent = ref('searchBar'); // Varsayılan olarak 'SearchBar' seçili
-
-function showComponent(componentName) {
-  currentComponent.value = componentName; // Seçilen componenti güncelle
-}
-</script>
-
 <template>
-  <div class="layout">
-    <!-- Sidebar -->
+    <div >
     <div class="sidebar">
-      <h2>Menü</h2>
-      <button @click="showComponent('searchBar')">Search Bar</button>
+      <button @click="navigateToNavbarbutton1" class="sidebar-button">
+        SearchBar
+      </button>
+      <button @click="navigateToNavbarbutton2" class="sidebar-button">
+        ImageSlider2
+      </button>
+      <button @click="navigateToNavbarbutton3" class="sidebar-button">
+        ImageSlider
+      </button>
+      <button @click="navigateToNavbarbutton4" class="sidebar-button">
+        BrandCards
+      </button>
+      <button @click="navigateToNavbarbutton5" class="sidebar-button">
+         CategoryCircles
+      </button>
+      <button @click="navigateToNavbarbutton6" class="sidebar-button">
+        Footer
+      </button>
+      <button @click="navigateToNavbarbutton7" class="sidebar-button">
+        Header
+      </button>
+      <button @click="navigateToNavbarbutton8" class="sidebar-button">
+        Card
+      </button>
+      <button @click="navigateToNavbarbutton9" class="sidebar-button">
+        ProductCards1
+      </button>
+      <button @click="navigateToNavbarbutton10" class="sidebar-button">
+         Kategoriler
+      </button>
+     
+    </div>
+   
     </div>
 
-    <!-- Ana Component Alanı -->
-    <div class="main">
-      <!-- Sadece seçilen component gösterilecek -->
-      <SearchBar v-if="currentComponent === 'searchBar'" />
-    </div>
-  </div>
-</template>
+  </template>
+  
+  <script setup>
+  import { useRouter } from 'vue-router';
+  
+  const router = useRouter();
+  
+  const navigateToNavbarbutton1 = () => {
+    router.push('/SearchBar');
+  };
+  
+  const navigateToNavbarbutton2 = () => {
+    router.push('/ImageSlider2');
+  };
+  
+  const navigateToNavbarbutton3 = () => {
+    router.push('/ImageSlider');
+  };
+  const navigateToNavbarbutton4 = () => {
+    router.push('/BrandCards');
+  };
+  const navigateToNavbarbutton5 = () => {
+    router.push('/CategoryCircles');
+  };
+  const navigateToNavbarbutton6 = () => {
+    router.push('/Footer');
+  };
+  
+  const navigateToNavbarbutton7 = () => {
+    router.push('/Header');
+  };
+  
+  const navigateToNavbarbutton8 = () => {
+    router.push('/Card');
+  };
+  const navigateToNavbarbutton9 = () => {
+    router.push('/ProductCards1');
+  };
+  const navigateToNavbarbutton10 = () => {
+    router.push('/Kategoriler');
+  };
 
-<style scoped>
-/* Layout Ayarları */
-.layout {
-  display: flex; /* Yan yana düzen */
-  height: 100vh; /* Tüm ekranı kapla */
-}
-
-/* Sidebar Stilleri */
-.sidebar {
-  width: 200px;
-  background-color: #f0f0f0;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Butonlar arası boşluk */
-  border-right: 1px solid #ddd; /* Sağ tarafa çizgi */
-}
-
-.sidebar h2 {
-  font-size: 18px;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-/* Sidebar Butonları */
-.sidebar button {
-  padding: 10px 15px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  font-size: 14px;
-  cursor: pointer;
-  text-align: left;
-}
-
-.sidebar button:hover {
-  background-color: #e6e6e6;
-}
-
-/* Main Alan Stili */
-.main {
-  flex-grow: 1;
-  padding: 20px;
-  background-color: #fff;
-  overflow-y: auto; /* Taşma durumunda kaydırma çubuğu */
-}
-</style>
-
-
-
+  
+  
+  </script>
+  
+  <style scoped>
+  .sidebar {
+    width: 100px;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar-button {
+    width: 80px;
+    height: 40px;
+    margin-bottom: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 40px;
+  }
+  
+  .sidebar-button:hover {
+    background-color: #0056b3;
+  }
+  </style>
