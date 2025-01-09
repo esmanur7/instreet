@@ -5,7 +5,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: [
     'bootstrap/dist/css/bootstrap.css', 
-    '@fortawesome/fontawesome-free/css/all.min.css'// Bootstrap CSS dosyasını dahil et
+    '@fortawesome/fontawesome-free/css/all.min.css',// Bootstrap CSS dosyasını dahil et
+    'bootstrap-icons/font/bootstrap-icons.css' // Bootstrap Icons'ı ekle
   ],
   vite: {
     optimizeDeps: {
