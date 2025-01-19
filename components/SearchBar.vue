@@ -27,28 +27,55 @@
           />
         </div>
         <!-- Arama Önerileri -->
-        <div v-if="showSuggestions" class="search-suggestions bg-white border rounded shadow mt-1 p-2">
+        <div 
+          v-if="showSuggestions" 
+          class="search-suggestions bg-white border rounded shadow mt-1 p-2 overflow-auto"
+          style="max-height: 300px"
+        >
           <div class="mb-2"><strong>Popüler Aramalar</strong></div>
           <div class="d-flex flex-wrap gap-2 mb-3">
-            <span class="badge bg-light text-dark border">Nike</span>
-            <span class="badge bg-light text-dark border">Kadın Bot</span>
-            <span class="badge bg-light text-dark border">Krampon</span>
-            <span class="badge bg-light text-dark border">Adidas</span>
-            <span class="badge bg-light text-dark border">Puma</span>
+            <a href="/search/nike" class="badge bg-light text-dark border no-underline">Nike</a>
+            <a href="/search/puma" class="badge bg-light text-dark border no-underline">Puma</a>
+            <a href="/search/adidas" class="badge bg-light text-dark border no-underline">Adidas</a>
+            <a href="/search/reebok" class="badge bg-light text-dark border no-underline">Reebok</a>
+            <a href="/search/krampon" class="badge bg-light text-dark border no-underline">Krampon</a>
+            <a href="/search/vans" class="badge bg-light text-dark border no-underline">Vans</a>
+            <a href="/search/bot" class="badge bg-light text-dark border no-underline">Bot</a>
+            <a href="/search/court-sneaker-tarzi" class="badge bg-light text-dark border no-underline">Court Sneaker Tarzı</a>
+            <a href="/search/mont" class="badge bg-light text-dark border no-underline">Mont</a>
+            <a href="/search/lumberjack" class="badge bg-light text-dark border no-underline">Lumberjack</a>
           </div>
-          <div class="mb-2"><strong>Popüler Ürünler</strong></div>
+          <div class="mb-2"><strong>Son Baktığınız Ürünler</strong></div>
           <ul class="list-unstyled">
-            <li class="mb-2">
-              <strong>Lumberjack</strong> - MURRY 4PR Siyah Erkek Koşu Ayakkabısı
-              <span class="text-danger">849,99 TL</span>
+            <li class="mb-2 d-flex align-items-center">
+              <a href="/product/101918152" class="d-flex align-items-center no-underline">
+                <img src="https://floimages.mncdn.com/mncropresize/100/150/media/catalog/product/24-05/22/101918152_f2.jpg" alt="" class="me-2" />
+                <div>
+                  <strong>Reebok</strong> - SPEED REFLECT 3.2 Siyah Erkek Spor Ayakkabı<br>
+                  <span class="text-muted text-decoration-line-through">2.399,99 TL</span>
+                  <span class="text-orange fw-bold">1.699,99 TL</span>
+                </div>
+              </a>
             </li>
-            <li class="mb-2">
-              <strong>Reebok</strong> - Fleece Hoodie Beyaz Kadın Sweatshirt
-              <span class="text-danger">999,99 TL</span>
+            <li class="mb-2 d-flex align-items-center">
+              <a href="/product/101792764" class="d-flex align-items-center no-underline">
+                <img src="https://floimages.mncdn.com/mncropresize/100/150/media/catalog/product/23-06/22/101792764_d2.jpeg" alt="" class="me-2" />
+                <div>
+                  <strong>Nike</strong> - COURT BOROUGH LOW RECRAFT Beyaz Unisex Sneaker<br>
+                  <span class="text-muted text-decoration-line-through">3.499,99 TL</span>
+                  <span class="text-orange fw-bold">2.799,99 TL</span>
+                </div>
+              </a>
             </li>
-            <li>
-              <strong>Lumberjack</strong> - BELISIMA 4PR Siyah Kadın Outdoor
-              <span class="text-danger">2.699,99 TL</span>
+            <li class="mb-2 d-flex align-items-center">
+              <a href="/product/102056221" class="d-flex align-items-center no-underline">
+                <img src="https://floimages.mncdn.com/mncropresize/100/150/media/catalog/product/24-10/09/102056221_m1-1728464366.jpg" alt="" class="me-2" />
+                <div>
+                  <strong>Jack & Jones</strong> - JORVESTERBRO PUFFER JACKE Siyah Erkek Mont<br>
+                  <span class="text-muted text-decoration-line-through">3.899,99 TL</span>
+                  <span class="text-orange fw-bold">2.299,99 TL</span>
+                </div>
+              </a>
             </li>
           </ul>
         </div>
@@ -124,8 +151,8 @@ const openCart = () => {
 
 .input-group .form-control {
   border-left: none;
-  height: 55px; /* Arama çubuğunun boyutu */
-  font-size: 17px; /* Arama çubuğu yazı boyutu */
+  height: 55px;
+  font-size: 17px;
 }
 
 .search-suggestions {
@@ -135,6 +162,15 @@ const openCart = () => {
   right: 0;
   z-index: 10;
   background-color: #fff;
+  overflow-y: auto;
+}
+
+.text-orange {
+  color: #fd7e14;
+}
+
+.text-decoration-line-through {
+  text-decoration: line-through;
 }
 
 .dropdown-menu {
@@ -160,16 +196,16 @@ const openCart = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #000; /* Yazı rengi */
-  border-color: #ddd; /* Kenarlık rengi */
-  background-color: #f9f9f9; /* Açık gri arka plan */
-  height: 35px; /* Yükseklik */
-  padding: 0 10px; /* Kenar boşlukları */
-  font-size: 14px; /* Yazı boyutu */
+  color: #000;
+  border-color: #ddd;
+  background-color: #f9f9f9;
+  height: 35px;
+  padding: 0 10px;
+  font-size: 14px;
 }
 
 .btn-outline-secondary:hover {
-  background-color: #e6e6e6; /* Hover rengi */
+  background-color: #e6e6e6;
 }
 
 .dropdown-item {
@@ -181,11 +217,45 @@ const openCart = () => {
   background-color: #f8f9fa;
 }
 
-.text-danger {
-  color: #dc3545 !important;
-  font-weight: bold;
+.no-underline {
+  text-decoration: none;
+  color: inherit;
 }
+
+.no-underline:hover {
+  color: inherit;
+}
+
+
+.search-bar:focus-within {
+  background-color: #fff; /* Tıklanıldığında beyaz arka plan */
+  border-color: #fd7e14; /* Turuncu kenarlık */
+  outline: none; /* Mavi kenarlığı kaldırır */
+}
+.input-group input:focus {
+  outline: none; /* Giriş kutusunun mavi kenarlığını kaldırır */
+  box-shadow: none; /* Tarayıcıların gölge efektini de kaldırır */
+}
+
+.input-group-text {
+  background-color: transparent; /* Varsayılan (şeffaf) */
+  border: none;
+  color: #6c757d; /* Varsayılan simge rengi */
+  transition: background-color 0.3s, color 0.3s; /* Animasyonlu geçiş */
+}
+
+.search-bar:focus-within .input-group-text {
+  background-color: #fd7e14; /* Turuncu renk */
+  color: #fff; /* Simge beyaz */
+}
+
+.search-bar:focus-within .input-group-text i {
+  color: #fff; /* Simgenin beyaz olması */
+}
+
 </style>
+
+
 
           
 
