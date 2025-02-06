@@ -1,228 +1,208 @@
 <template>
-  <nav class="navbar">
-    <ul class="menu">
-      <li
-        v-for="(kategori, index) in kategoriler"
-        :key="kategori.id"
-        :class="['menu-item', { 'with-separator': index > 0 }]"
-      >
-        <!-- Ana Kategori -->
-        <NuxtLink :to="kategori.url" class="menu-link">{{ kategori.anaKategori }}</NuxtLink>
+  <div class="category-page">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2 class="sidebar-title">BOS</h2>
+      <ul class="category-list">
+        <li v-for="category in allCategories" :key="category.id" class="category-item">
+          <NuxtLink :to="`/category/${category.id}`" class="category-item">{{ category.name }}</NuxtLink>
+        </li>
+      </ul>
 
-        <!-- Alt Kategoriler -->
-        <div v-if="kategori.altKategoriler && kategori.altKategoriler.length" class="submenu">
-          <ul>
-            <li v-for="alt in kategori.altKategoriler" :key="alt.ad">
-              <NuxtLink :to="alt.url" class="submenu-link">{{ alt.ad }}</NuxtLink>
+      <!-- Filters -->
+      <div class="filters">
+        <div class="filter-group" v-for="filter in filters" :key="filter.title">
+          <h3 class="filter-title" @click="toggleFilter(filter.title)">
+            {{ filter.title }}
+          </h3>
+          <ul
+              v-show="isFilterVisible(filter.title)"
+              class="filter-options"
+          >
+            <li
+                v-for="option in filter.options"
+                :key="option"
+                class="filter-option"
+            >
+              <input
+                  type="checkbox"
+                  :id="option"
+                  class="filter-checkbox"
+              />
+              <label :for="option">{{ option }}</label>
             </li>
           </ul>
         </div>
-      </li>
-    </ul>
-  </nav>
+      </div>
+    </aside>
+
+    <!-- Product Section -->
+    <main class="product-section">
+      <h1 class="category-title">{{ categoryName }}</h1>
+      <ProductGrid :products="products" />
+    </main>
+  </div>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { defineComponent, ref, computed } from "vue";
+import { useRoute } from "vue-router";
+import { useProductStore } from "@/stores/productStore";
+import { useCategoryStore } from "@/stores/categoryStore";
+import ProductGrid from "@/components/ProductGrid.vue";
+
+export default defineComponent({
+  name: "CategoryPage",
+  components: {
+    ProductGrid,
+  },
+  setup() {
+    const route = useRoute();
+    const categoryStore = useCategoryStore();
+    const productStore = useProductStore();
+
+    const categoryName = ref<string>("");
+    const visibleFilters = ref<string[]>([]);
+
+    const toggleFilter = (title: string) => {
+      if (visibleFilters.value.includes(title)) {
+        visibleFilters.value = visibleFilters.value.filter(
+            (filter) => filter !== title
+        );
+      } else {
+        visibleFilters.value.push(title);
+      }
+    };
+
+    const isFilterVisible = (title: string) => visibleFilters.value.includes(title);
+
+    const fetchCategoryData = async () => {
+      const categoryId = route.params.id as string;
+      const category = await categoryStore.fetchCategory(categoryId);
+      if (category) {
+        categoryName.value = category.name || "Unknown Category";
+      } else {
+        categoryName.value = "Unknown Category";
+        console.error(`Category with ID ${categoryId} not found.`);
+      }
+    };
+
+    const fetchData = async () => {
+      const categoryId = route.params.id as string;
+      await Promise.all([
+        categoryStore.fetchCategories(),
+        fetchCategoryData(),
+        productStore.fetchProductsByCategory(categoryId),
+      ]);
+    };
+
+    // Fetch data on mount and react to route changes
+    watch(
+        () => route.params.id,
+        fetchData,
+        { immediate: true }
+    );
+
+    onMounted(() => {
+      fetchData();
+    });
+
     return {
-      kategoriler: [
+      categoryName,
+      products: computed(() => productStore.products),
+      allCategories: computed(() => categoryStore.categories),
+      filters: ref([
         {
-          id: 1,
-          anaKategori: "Giyim",
-          url: "/giyim",
-          altKategoriler: [
-            { ad: "Kadın", url: "/giyim/kadin" },
-            { ad: "Çok Satanlar", url: "/giyim/coksatanlar" },
-            { ad: "En Yeniler", url: "/giyim/enyeniler" },
-            { ad: "Sweatshirt", url: "/giyim/sweatshirt" },
-            { ad: "Mont", url: "/giyim/mont" },
-            { ad: "Ceket", url: "/giyim/ceket" },
-            { ad: "Yağmurluk / Rüzgarlık", url: "/giyim/yagmurluk-ruzgarlik" },
-            { ad: "Eşofman", url: "/giyim/esofman" },
-            { ad: "Tayt", url: "/giyim/tayt" },
-            { ad: "Jean Pantolon", url: "/giyim/jean-pantolon" },
-            { ad: "Bra", url: "/giyim/bra" },
-            { ad: "T-shirt", url: "/giyim/t-shirt" },
-            { ad: "Şort", url: "/giyim/sort" },
-          ],
+          title: "BRENDOVI",
+          options: ["Dr Gans", "Florentina", "SANDONNA", "ULGRAN"],
         },
         {
-          id: 2,
-          anaKategori: "Kadın",
-          url: "/kadin",
-          altKategoriler: [
-            { ad: "Çok Satanlar", url: "/kadin/coksatan" },
-            { ad: "En Yeniler", url: "/kadin/enyeniler" },
-            { ad: "Spor", url: "/kadin/spor" },
-          ],
+          title: "MINIMALNA ŠIRINA ORMARIĆA",
+          options: ["55CM", "60CM"],
         },
         {
-          id: 3,
-          anaKategori: "Erkek",
-          url: "/erkek",
-          altKategoriler: [
-            { ad: "Çok Satanlar", url: "/erkek/coksatan" },
-            { ad: "En Yeniler", url: "/erkek/enyeniler" },
-            { ad: "Spor", url: "/erkek/spor" },
-          ],
+          title: "OBRADA-BOJA",
+          options: ["BEZ", "BIJELA", "CRNA GRANIT"],
         },
         {
-          id: 4,
-          anaKategori: "Çocuk",
-          url: "/cocuk",
-          altKategoriler: [
-            { ad: "Çok Satanlar", url: "/cocuk/coksatan" },
-            { ad: "En Yeniler", url: "/cocuk/enyeniler" },
-            { ad: "Spor", url: "/cocuk/spor" },
-          ],
+          title: "MATERIJAL",
+          options: ["Kamen", "Inox"],
         },
-        {
-          id: 5,
-          anaKategori: "Spor",
-          url: "/spor",
-          altKategoriler: [
-            { ad: "Çok Satanlar", url: "/spor/coksatan" },
-            { ad: "En Yeniler", url: "/spor/enyeniler" },
-            { ad: "Spor", url: "/spor/spor" },
-          ],
-        },
-        {
-          id: 6,
-          anaKategori: "Çanta/Aksesuar",
-          url: "/canta-aksesuar",
-          altKategoriler: [
-            { ad: "Çok Satanlar", url: "/canta-aksesuar/coksatan" },
-            { ad: "En Yeniler", url: "/canta-aksesuar/enyeniler" },
-            { ad: "Cüzdan", url: "/canta-aksesuar/cuzdan" },
-          ],
-        },
-        {
-          id: 7,
-          anaKategori: "Outdoor",
-          url: "/outdoor",
-          altKategoriler: [
-            { ad: "Bot", url: "/outdoor/bot" },
-            { ad: "Mont", url: "/outdoor/mont" },
-          ],
-        },
-        {
-          id: 8,
-          anaKategori: "Markalar",
-          url: "/markalar",
-          altKategoriler: [],
-        },
-        {
-          id: 9,
-          anaKategori: "Outlet",
-          url: "/outlet",
-          altKategoriler: [],
-        },
-        {
-          id: 10,
-          anaKategori: "Tüm Kategoriler",
-          url: "/tum-kategoriler",
-          altKategoriler: [],
-        },
-      ],
+      ]),
+      toggleFilter,
+      isFilterVisible,
+      fetchData,
     };
   },
-};
+});
 </script>
 
 <style scoped>
-.navbar {
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
+.category-page {
   display: flex;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-}
-
-.menu {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  padding: 20px;
   gap: 20px;
 }
 
-.menu-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.menu-item.with-separator::before {
-  content: '';
-  height: 20px;
-  width: 1px;
-  background-color: #ddd;
-  margin-right: 20px;
-}
-
-.menu-link {
-  font-size: 16px;
-  color: #000;
-  text-decoration: none;
-  padding: 15px 20px;
-  display: inline-block;
-  transition: color 0.3s ease;
-}
-
-.menu-link:hover {
-  color: #007bff;
-}
-
-.submenu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Sidebar */
+.sidebar {
+  width: 20%;
+  padding: 15px;
+  background-color: #f9f9f9;
   border: 1px solid #ddd;
-  padding: 10px;
-  z-index: 1000;
-  min-width: 200px;
 }
 
-.menu-item:hover .submenu {
-  display: block;
+.sidebar-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.submenu ul {
+.category-list {
+  list-style: none;
+  padding: 0;
+}
+
+.category-item {
+  margin-bottom: 10px;
+}
+
+.category-link {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.category-link:hover {
+  color: #f16805;
+}
+
+.filters {
+  margin-top: 20px;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-title {
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.filter-options {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.submenu li {
-  margin-bottom: 5px;
+.filter-option {
+  margin: 5px 0;
 }
 
-.submenu-link {
-  font-size: 14px;
-  color: #000;
-  text-decoration: none;
-  display: block;
-  padding: 5px 10px;
-}
-
-.submenu-link:hover {
-  color: #007bff;
-  text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-  .menu {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .menu-link {
-    padding: 10px;
-  }
+.filter-checkbox {
+  margin-right: 10px;
 }
 </style>
