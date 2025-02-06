@@ -3,13 +3,14 @@
     <div class="container d-flex align-items-center justify-content-between">
       <!-- Logo -->
       <div class="logo">
-        <NuxtLink to="/">
-          <img 
-            src="https://www.instreet.com.tr/pub/assets/instreet-v2/images/instreet-logo-v2-black.svg" 
-            alt="Logo" 
-            width="200" 
+        <router-link to = "/">
+          <img
+              src="https://www.instreet.com.tr/pub/assets/instreet-v2/images/instreet-logo-v2-black.svg"
+              alt="Logo"
+              width="200"
+
           />
-        </NuxtLink>
+        </router-link>
       </div>
 
       <!-- Arama Çubuğu -->
@@ -18,19 +19,19 @@
           <span class="input-group-text">
             <i class="bi bi-search"></i>
           </span>
-          <input 
-            type="text" 
-            class="form-control" 
-            placeholder="Aradığınız ürün, marka veya kategoriyi yazınız"
-            @focus="showSuggestions = true" 
-            @blur="hideSuggestions"
+          <input
+              type="text"
+              class="form-control"
+              placeholder="Aradığınız ürün, marka veya kategoriyi yazınız"
+              @focus="showSuggestions = true"
+              @blur="hideSuggestions"
           />
         </div>
         <!-- Arama Önerileri -->
-        <div 
-          v-if="showSuggestions" 
-          class="search-suggestions bg-white border rounded shadow mt-1 p-2 overflow-auto"
-          style="max-height: 300px"
+        <div
+            v-if="showSuggestions"
+            class="search-suggestions bg-white border rounded shadow mt-1 p-2 overflow-auto"
+            style="max-height: 300px"
         >
           <div class="mb-2"><strong>Popüler Aramalar</strong></div>
           <div class="d-flex flex-wrap gap-2 mb-3">
@@ -84,29 +85,29 @@
       <!-- Butonlar -->
       <div class="buttons d-flex align-items-center gap">
         <!-- Giriş Yap -->
-        <div 
-          class="dropdown position-relative"
-          @mouseover="showLoginDropdown = true" 
-          @mouseleave="showLoginDropdown = false"
+        <div
+            class="dropdown position-relative"
+            @mouseover="showLoginDropdown = true"
+            @mouseleave="showLoginDropdown = false"
         >
           <button class="btn btn-outline-secondary d-flex align-items-center" type="button">
             <i class="bi bi-person me-2"></i> Giriş Yap
             <i class="bi bi-chevron-down ms-2"></i>
           </button>
-          <ul 
-            v-if="showLoginDropdown" 
-            class="dropdown-menu show position-absolute"
+          <ul
+              v-if="showLoginDropdown"
+              class="dropdown-menu show position-absolute"
           >
-            <li><button class="dropdown-item">Giriş Yap</button></li>
-            <li><button class="dropdown-item">Üye Ol</button></li>
+            <li><button  class="dropdown-item"><router-link to="/login">Giriş Yap</router-link></button></li>
+            <li><button  class="dropdown-item"> <router-link to="/Register">Üye Ol</router-link></button></li>
           </ul>
         </div>
 
         <!-- Sepetim -->
         <div class="dropdown position-relative">
-          <button 
-            class="btn btn-outline-secondary d-flex align-items-center" 
-            @click="openCart"
+          <button
+              class="btn btn-outline-secondary d-flex align-items-center"
+              @click="openCart"
           >
             <i class="bi bi-cart me-2"></i> Sepetim
             <i class="bi bi-chevron-down ms-2"></i>
@@ -141,6 +142,7 @@ const openCart = () => {
 <style scoped>
 .logo img {
   max-height: 50px;
+  margin-left: 20px;
 }
 
 .input-group-text {
@@ -153,6 +155,7 @@ const openCart = () => {
   border-left: none;
   height: 55px;
   font-size: 17px;
+
 }
 
 .search-suggestions {
@@ -256,8 +259,6 @@ const openCart = () => {
 </style>
 
 
-
-          
 
 
 
